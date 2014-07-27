@@ -6,11 +6,11 @@ module.exports = (grunt)->
 
   grunt.initConfig
 
-    cfg: 
+    cfg:
       # http:
       #   port: 8010 # http server port
       #   host: '*' # listen on all interfaces
-      #   livereloadport: 3810 #livereload port      
+      #   livereloadport: 3810 #livereload port
       # tmp: '.tmp'
       # dist: 'public'
       # coffeeFiles: [
@@ -19,11 +19,13 @@ module.exports = (grunt)->
       #   'app/**/*.coffee'
       # ]
       coffeeFiles: [
-        'app/js/app.coffee' # first app js
-        'app/js/*.coffee'
-        'app/js/**/*.coffee'
-      ] 
-    
+        'app/app.coffee' # first app js
+        'app/commons/*/*.coffee' # first module declaration
+        'app/commons/**/*.coffee'
+        'app/modules/*/*.coffee' # first module declaration
+        'app/modules/*/**/*.coffee'
+      ]
+
     clean:
       all:[
         '.tmp/**/*'
@@ -36,7 +38,7 @@ module.exports = (grunt)->
     coffee:
       options:
         bare: true
-        sourceMap: true      
+        sourceMap: true
       build:
         files:
           '.tmp/js/application.js': '<%= cfg.coffeeFiles %>'
@@ -101,7 +103,7 @@ module.exports = (grunt)->
       styles:
         files: 'app/**/*.styl'
         tasks: ['stylus', 'copy:stylus','clean:stylus']
-      scripts: 
+      scripts:
         files: 'app/**/*.coffee'
         tasks: ['coffee']
       templates:
@@ -121,7 +123,7 @@ module.exports = (grunt)->
         options:
           open: true
           base: ['.tmp', 'bower_components', '.', 'public']
-          
+
     # process index file
     useminPrepare:
       html: 'public/index.html'
@@ -140,7 +142,7 @@ module.exports = (grunt)->
           src: ['**']
           dest: 'public/'
         ]
-      stylus: 
+      stylus:
         files: '.tmp/css/application.css': '.tmp/css/index.css'
 
     # concat:
@@ -152,7 +154,7 @@ module.exports = (grunt)->
     #       # }
     #       {
     #         dest: '.tmp/concat/css/application.css'
-    #         src: ['.tmp/stylus/index.css']            
+    #         src: ['.tmp/stylus/index.css']
     #       }
     #     ]
 
@@ -171,7 +173,7 @@ module.exports = (grunt)->
   ##############################################################
   # Dependencies
   ###############################################################
-  
+
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-contrib-clean')

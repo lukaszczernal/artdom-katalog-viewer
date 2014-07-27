@@ -1,4 +1,0 @@
-$( () ->
-	$("img.page-image").lazyload()
-)
-

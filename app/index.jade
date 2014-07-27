@@ -6,14 +6,14 @@ html.no-js
     title
     meta(name='description', content='')
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    
+
     //build:css(bower_components) css/vendor.css
     link(rel='stylesheet', href='normalize-css/normalize.css')
     //endbuild
 
     link(rel='stylesheet', href='css/application.css')
-    //- script(src='js/vendor/modernizr-2.7.1.min.js')
-  body
+
+  body(ng-app="artdomApp")
     //- <!--[if lt IE 8]>
     //- p.browsehappy
     //-   | You are using an <strong>outdated</strong> browser.
@@ -22,13 +22,14 @@ html.no-js
     //- <![endif]-->
 
     //- Add your site or application content here
-    include ./templates/header
-    include ./templates/body
+    div(ng-view="mainView")
 
     //- script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
     //- script window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')
     //build:js(bower_components) js/vendor.js
     script(type='text/javascript', src='jquery/dist/jquery.js')
+    script(type='text/javascript', src='angular/angular.js')
+    script(type='text/javascript', src='angular-route/angular-route.js')
     script(type='text/javascript', src='jquery.lazyload/jquery.lazyload.js')
     //endbuild
     script(src='js/application.js')
