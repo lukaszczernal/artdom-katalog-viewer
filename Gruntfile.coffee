@@ -4,6 +4,9 @@ module.exports = (grunt)->
   # Project configuration
   ############################################################
 
+  # ENABLES MOD-REWRITE LIKE REWRITING - REQUIRED FOR HTML5MODE
+  rewriteRulesSnippet = require('grunt-connect-rewrite/lib/utils').rewriteRequest
+
   grunt.initConfig
 
     cfg:
@@ -119,10 +122,41 @@ module.exports = (grunt)->
         hostname: 'localhost'
         livereload: '3810'
         base: 'public'
+      rules: [
+          {from: '^/[^#/](.*)$', to: '/index.html'},
+          # // Internal rewrite
+          # {from: '^/index_dev.html$', to: '/src/index.html'},
+          # // Internal rewrite
+          # {from: '^/js/(.*)$', to: '/src/js/$1'},
+          # // 301 Redirect
+          {from: '^/old-stuff/(.*)$', to: '/new-cool-stuff/$1', redirect: 'permanent'},
+          # // 302 Redirect
+          {from: '^/stuff/(.*)$', to: '/temporary-stuff/$1', redirect: 'temporary'}
+      ]
       server:
         options:
           open: true
           base: ['.tmp', 'bower_components', '.', 'public']
+          middleware: (connect, options) ->
+            middlewares = []
+            # RewriteRules support
+            middlewares.push(rewriteRulesSnippet)
+
+            if (!Array.isArray(options.base))
+              options.base = [options.base]
+
+            directory = options.directory || options.base[options.base.length - 1]
+            options.base.forEach( (base) ->
+              # // Serve static files.
+              middlewares.push(connect.static('public'))
+            );
+
+            # middlewares.push(connect.static('public'))
+
+            # # // Make directory browse-able.
+            middlewares.push(connect.directory(directory))
+
+            middlewares
 
     # process index file
     useminPrepare:
@@ -182,6 +216,7 @@ module.exports = (grunt)->
   grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-contrib-jade')
   grunt.loadNpmTasks('grunt-contrib-connect')
+  grunt.loadNpmTasks('grunt-connect-rewrite')
   grunt.loadNpmTasks('grunt-contrib-stylus')
   grunt.loadNpmTasks('grunt-contrib-cssmin')
   grunt.loadNpmTasks('grunt-usemin')
@@ -201,6 +236,7 @@ module.exports = (grunt)->
     # 'useminPrepare'
     # 'concat:build' # tmp
     # 'cssmin' # public
+    'configureRewriteRules'
     'connect:server'
     'watch'
   ])

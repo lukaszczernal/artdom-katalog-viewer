@@ -1,16 +1,20 @@
 artdomApp = angular.module('artdomApp', [
   'ngRoute',
+  'firebase'
   'artdomApp.directives',
   'artdomApp.home',
   'artdomApp.shop'
+  'artdomApp.login'
 ])
 
 # DEFAULT ROUTING
-.config(['$routeProvider', ($routeProvider) ->
+.config(['$locationProvider','$routeProvider', ($locationProvider, $routeProvider) ->
 
-   $routeProvider
-   .when('/', redirectTo: '/wielki-kiermasz-nysa')
-   .otherwise('/')
+    $locationProvider.html5Mode(true)
+
+    $routeProvider
+    .when('/', redirectTo: '/login')
+    .otherwise('/')
 
 ])
 
