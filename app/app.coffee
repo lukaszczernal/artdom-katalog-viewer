@@ -13,7 +13,7 @@ artdomApp = angular.module('artdomApp', [
     $locationProvider.html5Mode(true)
 
     $routeProvider
-    .when('/', redirectTo: '/login')
+    .when('/', redirectTo: '/wielki-kiermasz-nysa')
     .otherwise('/')
 
 ])

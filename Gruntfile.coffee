@@ -123,15 +123,7 @@ module.exports = (grunt)->
         livereload: '3810'
         base: 'public'
       rules: [
-          {from: '^/[^#/](.*)$', to: '/index.html'},
-          # // Internal rewrite
-          # {from: '^/index_dev.html$', to: '/src/index.html'},
-          # // Internal rewrite
-          # {from: '^/js/(.*)$', to: '/src/js/$1'},
-          # // 301 Redirect
-          {from: '^/old-stuff/(.*)$', to: '/new-cool-stuff/$1', redirect: 'permanent'},
-          # // 302 Redirect
-          {from: '^/stuff/(.*)$', to: '/temporary-stuff/$1', redirect: 'temporary'}
+        {from: '^((?!(\.jpg|\.png|\.js|\.html|\.css)).)*$', to: '/index.html'}
       ]
       server:
         options:
@@ -148,7 +140,7 @@ module.exports = (grunt)->
             directory = options.directory || options.base[options.base.length - 1]
             options.base.forEach( (base) ->
               # // Serve static files.
-              middlewares.push(connect.static('public'))
+              middlewares.push(connect.static(base))
             );
 
             # middlewares.push(connect.static('public'))
