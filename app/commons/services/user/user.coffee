@@ -1,55 +1,35 @@
 servicesModule
-.service('User', ['$location', ($location) ->
+.service('User', [
+  '$firebaseSimpleLogin'  
+  '$location'
+  '$firebase'
 
-  ref = new Firebase("https://artdom-katalog.firebaseIO.com")
+  ($firebaseSimpleLogin, $location, $firebase) ->
 
-  auth = new FirebaseSimpleLogin ref, (error, user) ->
+    ref = new Firebase("https://artdom-katalog.firebaseIO.com")
+    auth = $firebaseSimpleLogin(ref)
 
-    if (error)
-      console.log(error)
-    else if (user)
-      console.log("User:", user)
-      $location.path '/tokens'
-      User.me = user
-      User.successLoginCallback()
+    User =
 
-    else
-      console.log 'user is logged out'
+      me: null
+
+      login: (username, password, successLoginCallback) ->
+        User.me = null
+        auth.$login("password",
+          email     : username
+          password  : password
+          rememberMe: true)
+        .then (user) ->
+          User.me = user
+          console.log "logged in as ", user.uid
+        , (error) ->
+          console.error "login failed", error
+        .then (successLoginCallback || angular.noop)
 
 
-  User =
-
-    me: null
-    successLoginCallback: angular.noop
-
-    login: (username, password, successLoginCallback) ->
-      @successLoginCallback = successLoginCallback
-
-      auth.login "password",
-        email     : username
-        password  : password
-        rememberMe: true
-
-    logout: () ->
-      auth.logout()
-      User.me = null
-      $location.path '/login'
-
-    # loginCallback: (err, user) ->
-    #   @me = user
-
-    #   if (err)
-    #     console.log(err)
-    #   else if (user)
-    #     @isLoggedin = true
-    #     $location.path '/tokeny'
-    #     console.log("User ID: " + user.uid + ", Provider: " + user.provider)
-    #   else
-    #     console.log 'user is logged out'
-
-    #   $scope.$apply()
-
-    #   @successLoginCallback()
-    #   @successLoginCallback = angular.noop
+      logout: () ->
+        auth.$logout()
+        User.me = null
+        $location.path '/login'
 
 ])

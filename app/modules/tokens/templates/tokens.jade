@@ -1,9 +1,40 @@
 h1 tokeny
 
-table
-  tr(ng-repeat="item in hashes")
-    td {{item}}
+form(name="newToken", ng-submit="add()")
 
-section()
-  h3 Logged in as {{User.me.email}}
-  button(ng-click="User.logout()") logout
+  table.table
+    thead
+      tr
+        th Token
+        th Email klienta
+        th Ważne do
+        th Ilość wejść
+        th &nbsp;
+    tbody
+      tr(ng-repeat="(hash, data) in hashes")
+        td 
+          a(ng-href="/katalog/{{hash}}") {{hash}}
+        td {{data.email}}
+        td {{data.validTo | date}}
+        td 0
+        td 
+          a(href) Wyślij mail do klienta
+    tfoot
+      tr
+        td -
+        td
+          input(ng-model="newTokenEmail", type="email", required, placeholder="e-mail klienta")
+        td
+          label(for="newTokenValidTo") Data ważności
+          input(ng-model="newTokenValidTo", type="date", required, min="{{todayDate}}" name="newTokenValidTo")
+        td -
+        td
+          button.btn.btn-default.btn-xs(type="submit") Zapisz nowy
+
+//- button.btn.btn-default Dodaj +
+
+br
+br
+section
+  small Logged in as {{User.me.email}}
+  button.btn.btn-default.btn-xs(ng-click="User.logout()") logout

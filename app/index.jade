@@ -9,7 +9,8 @@ html.no-js
     base(href="/index.html")
 
     //build:css(bower_components) css/vendor.css
-    link(rel='stylesheet', href='normalize-css/normalize.css')
+    //- link(rel='stylesheet', href='normalize-css/normalize.css')
+    link(rel='stylesheet', href='bootstrap/dist/css/bootstrap.css')
     //endbuild
 
     link(rel='stylesheet', href='css/application.css')
@@ -33,8 +34,9 @@ html.no-js
     script(type='text/javascript', src='angular-route/angular-route.js')
     script(type='text/javascript', src='jquery.lazyload/jquery.lazyload.js')
     script(type='text/javascript', src='firebase/firebase.js')
-    script(type='text/javascript', src='angularfire/dist/angularfire.js')
     script(type='text/javascript', src='firebase-simple-login/firebase-simple-login.js')
+    script(type='text/javascript', src='angularfire/dist/angularfire.js')
+    script(type='text/javascript', src='angular-bootstrap/ui-bootstrap-tpls.js')
     //endbuild
     script(src='js/application.js')
 
