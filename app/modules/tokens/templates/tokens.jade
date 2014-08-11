@@ -1,0 +1,9 @@
+h1 tokeny
+
+table
+  tr(ng-repeat="item in hashes")
+    td {{item}}
+
+section()
+  h3 Logged in as {{User.me.email}}
+  button(ng-click="User.logout()") logout

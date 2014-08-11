@@ -1,10 +1,12 @@
 artdomApp = angular.module('artdomApp', [
-  'ngRoute',
   'firebase'
-  'artdomApp.directives',
-  'artdomApp.home',
+  'ngRoute'
+  'artdomApp.services'
+  'artdomApp.directives'
+  'artdomApp.home'
   'artdomApp.shop'
   'artdomApp.login'
+  'artdomApp.tokens'
 ])
 
 # DEFAULT ROUTING
