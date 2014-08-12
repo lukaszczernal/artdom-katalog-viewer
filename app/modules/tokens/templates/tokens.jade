@@ -12,20 +12,20 @@ form(name="newToken", ng-submit="add()")
         th &nbsp;
     tbody
       tr(ng-repeat="(hash, data) in hashes")
-        td 
+        td
           a(ng-href="/katalog/{{hash}}") {{hash}}
         td {{data.email}}
-        td {{data.validTo | date}}
+        td {{data.validTo | date: 'yyyy-MM-dd'}}
         td 0
-        td 
-          a(href) Wyślij mail do klienta
+        td &nbsp;
+          //- a(href) Wyślij mail do klienta
     tfoot
       tr
         td -
         td
           input(ng-model="newTokenEmail", type="email", required, placeholder="e-mail klienta")
         td
-          label(for="newTokenValidTo") Data ważności
+          label(for="newTokenValidTo")
           input(ng-model="newTokenValidTo", type="date", required, min="{{todayDate}}" name="newTokenValidTo")
         td -
         td

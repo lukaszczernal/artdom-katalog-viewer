@@ -25,14 +25,15 @@ tokensModule.controller 'tokensCtrl', [
     $scope.newTokenValidTo = '2014-08-15'
 
 
-    $scope.add = () ->
-      #TODO generate hash
-      generatedHash = 'abudabi'
+    generateHash = () ->
+      Math.random().toString(36).substr(2)
 
-      objectToSave =  
+    $scope.add = () ->
+
+      objectToSave =
         email: $scope.newTokenEmail
         validTo: $scope.newTokenValidTo
 
-      ref.child(generatedHash).set(objectToSave)
+      ref.child(generateHash()).set(objectToSave)
 
 ]

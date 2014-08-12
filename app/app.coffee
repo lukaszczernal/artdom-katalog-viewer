@@ -7,6 +7,7 @@ artdomApp = angular.module('artdomApp', [
   'artdomApp.shop'
   'artdomApp.login'
   'artdomApp.tokens'
+  'artdomApp.catalog'
   'ui.bootstrap'
 ])
 
