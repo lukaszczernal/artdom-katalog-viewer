@@ -1,6 +1,6 @@
 servicesModule
 .service('User', [
-  '$firebaseSimpleLogin'  
+  '$firebaseSimpleLogin'
   '$location'
   '$firebase'
 
