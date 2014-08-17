@@ -1,37 +1,39 @@
 h1 tokeny
 
-form(name="newToken", ng-submit="add()")
+table.table
+  thead
+    tr
+      th Token
+      th Email klienta
+      th Ważne do
+      th Ilość wejść
+      th &nbsp;
+  tbody
+    tr(ng-repeat="(hash, data) in hashes")
+      td
+        a(ng-href="/katalog/{{hash}}") {{hash}}
+      td {{data.email}}
+      td {{data.validTo | date: 'yyyy-MM-dd'}}
+      td 0
+      td &nbsp;
+        button.btn.btn-default.btn-xs(ng-click="remove(hash)") Usuń
 
+form(name="newToken", ng-submit="add()")  
   table.table
     thead
       tr
-        th Token
         th Email klienta
         th Ważne do
-        th Ilość wejść
-        th &nbsp;
+        th
     tbody
-      tr(ng-repeat="(hash, data) in hashes")
-        td
-          a(ng-href="/katalog/{{hash}}") {{hash}}
-        td {{data.email}}
-        td {{data.validTo | date: 'yyyy-MM-dd'}}
-        td 0
-        td &nbsp;
-          //- a(href) Wyślij mail do klienta
-    tfoot
       tr
-        td -
         td
           input(ng-model="newTokenEmail", type="email", required, placeholder="e-mail klienta")
         td
           label(for="newTokenValidTo")
           input(ng-model="newTokenValidTo", type="date", required, min="{{todayDate}}" name="newTokenValidTo")
-        td -
         td
           button.btn.btn-default.btn-xs(type="submit") Zapisz nowy
-
-//- button.btn.btn-default Dodaj +
 
 br
 br

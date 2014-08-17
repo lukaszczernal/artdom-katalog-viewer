@@ -3,10 +3,11 @@ tokensModule.controller 'tokensCtrl', [
   '$location'
   '$filter'
   '$scope'
+  '$modal'
   'User'
 
 
-  ($firebase, $location, $filter, $scope, User) ->
+  ($firebase, $location, $filter, $scope, $modal ,User) ->
 
     # $scope.baseUrl = "http://" + $location.$$host + ":" + $location.$$port + "/katalog/"
 
@@ -35,5 +36,18 @@ tokensModule.controller 'tokensCtrl', [
         validTo: $scope.newTokenValidTo
 
       ref.child(generateHash()).set(objectToSave)
+
+    $scope.remove = (hash) ->
+
+      modalInstance = $modal.open(
+        templateUrl: './commons/templates/modals/confirmation.html'
+
+      )
+
+      modalInstance.result.then () ->
+        console.log 'modalInstance resolved'
+        # ref.child(hash).remove()
+        
+
 
 ]

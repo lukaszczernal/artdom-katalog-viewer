@@ -7,6 +7,7 @@ tokensModule.config(['$routeProvider', ($routeProvider) ->
   .when('/tokens',
     templateUrl: './modules/tokens/templates/tokens.html',
     controller: 'tokensCtrl'
+    requireLogin: true
   )
 
 ])

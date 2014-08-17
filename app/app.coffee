@@ -18,8 +18,20 @@ artdomApp = angular.module('artdomApp', [
 
     $routeProvider
     .when('/', redirectTo: '/wielki-kiermasz-nysa')
-    .otherwise('/')
+    .otherwise({redirectTo: '/'})
 
+])
+
+.run([
+  '$rootScope',
+  '$location' 
+  'User', 
+
+  ($rootScope, $location, User) ->
+
+    $rootScope.$on '$routeChangeStart', (evt, next, current) ->
+      if next.$$route.requireLogin && !User.me
+        $location.path('/login')
 ])
 
 

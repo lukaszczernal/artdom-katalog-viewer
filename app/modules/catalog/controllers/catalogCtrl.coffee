@@ -4,40 +4,46 @@ catalogModule.controller 'catalogCtrl', [
   '$location'
   '$filter'
   '$scope'
+  '$http'
+  '$q'
 
-  ($routeParams, $firebase, $location, $filter, $scope) ->
-
+  ($routeParams, $firebase, $location, $filter, $scope, $http, $q) ->
+    $scope.previewImgURL
+    $scope.showPreview
+    $scope.isPreview
+    $scope.access
+    $scope.pages
+    
+    # CHECK HASH IN FIREBASE
     # ref = new Firebase("https://artdom-katalog.firebaseIO.com/hashes/" + $routeParams.hash)
     # sync = $firebase(ref)
-
     # $scope.hash = sync.$asObject()
+    # hashPromise = $scope.hash.$loaded()
 
-    # $scope.access = null
+    # # GET LIST OF PAGES
+    pagesPromise = $http(
+      method: "get"
+      url: '/data/pages-array.json'
+    )
 
-    # $scope.hash.$loaded().then (data) ->
-    #   $scope.access = true
-    # , (err) ->
-    #   $scope.access = false
 
-    client = new Dropbox.Client({key: 'e0ipo34kgsqwzg6'})
+    
+    # $q.all([pagesPromise, hashPromise]).then (data) ->
+    $q.all([pagesPromise]).then (data) ->
+      $scope.pages = data[0].data
+      $scope.access = true
 
-    # // Try to finish OAuth authorization.
-    client.authenticate {interactive: false}, (error, customer) ->
-      if (error)
-        alert('Authentication error: ' + error)
-      else
-        console.log 'todo bien'
+      console.log $scope.pages
+    , (err) ->
+      $scope.access = false
 
-        # if (client.isAuthenticated())
-        #     console.log 'client.isAuthenticated'
 
-    # console.log 'client.isAuthenticated()', client.isAuthenticated()
+    $scope.showPreview = (page) ->
+      $scope.isPreview = true
+      $scope.previewImgURL = "jpg/preview/" +  page.svg.file + ".jpg"
 
-    # datastoreManager = client.getDatastoreManager()
-
-    # console.log 'datastoreManager', datastoreManager
-    # datastoreManager.listDatastores()
-
-    # client.readFile("express-katalog/public/jpg/1-2 MATY.svg.jpg", {}, readComplete)
+    $scope.hidePreview = () ->
+      $scope.isPreview = false
+      $scope.previewImgURL = ''      
 
 ]

@@ -1,9 +1,13 @@
 
 div(ng-show="access == null")
-  p Wczytuje katalog
+  p Sprawdzam dostęp do katalogu
 
-div(ng-show="access == true")
-  p Katalog. Enjoy!
-
-div(ng-show="access == false")
+div(ng-if="access == false")
   p Brak dostępu do katalogu. Skontaktuje się z ...
+
+div.catalogWrapper(ng-if="access == true")
+  a.catalogPage.m-preview(ng-repeat="page in pages", ng-click="showPreview(page)")
+    img.catalogPageImage(src="jpg/preview/{{page.svg.file}}.jpg")
+  
+div.catalogPreview(ng-click="hidePreview()", ng-show="isPreview")
+  img.catalogPreviewImage(src="{{previewImgURL}}")

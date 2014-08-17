@@ -7,15 +7,15 @@ servicesModule
   ($firebaseSimpleLogin, $location, $firebase) ->
 
     ref = new Firebase("https://artdom-katalog.firebaseIO.com")
-    auth = $firebaseSimpleLogin(ref)
-
+    
     User =
+      auth: $firebaseSimpleLogin(ref)
 
       me: null
 
       login: (username, password, successLoginCallback) ->
         User.me = null
-        auth.$login("password",
+        @auth.$login("password",
           email     : username
           password  : password
           rememberMe: true)
@@ -28,7 +28,7 @@ servicesModule
 
 
       logout: () ->
-        auth.$logout()
+        @auth.$logout()
         User.me = null
         $location.path '/login'
 
