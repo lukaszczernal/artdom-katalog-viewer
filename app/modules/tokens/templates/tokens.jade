@@ -16,9 +16,9 @@ table.table
       td {{data.validTo | date: 'yyyy-MM-dd'}}
       td 0
       td &nbsp;
-        button.btn.btn-default.btn-xs(ng-click="remove(hash)") Usuń
+        button.btn.btn-default.btn-xs(ng-click="remove(hash, data)") Usuń
 
-form(name="newToken", ng-submit="add()")  
+form(name="newToken", ng-submit="add()")
   table.table
     thead
       tr

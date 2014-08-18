@@ -1,7 +1,18 @@
-section(ng-hide="user")
-  form(name="loginForm", ng-submit="login()")
-    input(ng-model="username", type="text", placeholder="login", name="login")
-    input(ng-model="password", type="password", placeholder="password", name="password")
-    input(type="submit", value="login")
+section.loginBlock(ng-hide="user")
+  form.form-horizontal(name="loginForm", ng-submit="login()")
+
+    div.form-group
+      lable.control-label.col-sm-2 Email
+      div.col-sm-10
+        input.form-control(ng-model="username", type="text", placeholder="login", name="login")
+
+    div.form-group
+      label.control-label.col-sm-2 Hasło
+      div.col-sm-10
+        input.form-control(ng-model="password", type="password", placeholder="password", name="password")
+
+    div.form-group
+      div.col-sm-offset-2.col-sm-10
+        input.btn.btn-default(type="submit", value="login")
 
 

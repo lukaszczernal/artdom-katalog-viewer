@@ -1,1 +1,8 @@
-h1 confirmation modal
+
+div.modal-header
+  h4.modal-title {{title}}
+//- div.modal-body {{body}}
+
+div.modal-footer
+  button.btn.btn-primary(ng-click="ok()") OK
+  button.btn.btn-warning(ng-click="cancel()") Cancel

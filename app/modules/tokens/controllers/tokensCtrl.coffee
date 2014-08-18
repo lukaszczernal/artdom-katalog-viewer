@@ -23,7 +23,7 @@ tokensModule.controller 'tokensCtrl', [
 
     #TODO temp
     $scope.newTokenEmail = 'john@carmac.com'
-    $scope.newTokenValidTo = '2014-08-15'
+    $scope.newTokenValidTo = $scope.todayDate
 
 
     generateHash = () ->
@@ -37,17 +37,21 @@ tokensModule.controller 'tokensCtrl', [
 
       ref.child(generateHash()).set(objectToSave)
 
-    $scope.remove = (hash) ->
+    $scope.remove = (hash, data) ->
 
       modalInstance = $modal.open(
         templateUrl: './commons/templates/modals/confirmation.html'
+        controller: ($scope, $modalInstance) ->
+          $scope.title = "Czy usunąć dostęp dla " + data.email + "?"
 
+          $scope.ok = () ->
+            $modalInstance.close()
+
+          $scope.cancel = () ->
+            $modalInstance.dismiss('cancel')
       )
 
       modalInstance.result.then () ->
-        console.log 'modalInstance resolved'
-        # ref.child(hash).remove()
-        
-
+        ref.child(hash).remove()
 
 ]
