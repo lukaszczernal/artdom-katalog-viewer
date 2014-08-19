@@ -1,25 +1,26 @@
 h1 tokeny
 
-table.table
+table.table.table-striped
   thead
     tr
       th Token
       th Email klienta
       th Ważne do
-      th Ilość wejść
+      th Ilość wyświetleń
       th &nbsp;
   tbody
     tr(ng-repeat="(hash, data) in hashes")
       td
-        a(ng-href="/katalog/{{hash}}") {{hash}}
+        a(ng-href="/katalog/{{hash}}", target="_blank") {{hash}}
       td {{data.email}}
-      td {{data.validTo | date: 'yyyy-MM-dd'}}
-      td 0
+      td.tokensCell(ng-class="{'m-overdue': today > data.validTo}") {{data.validTo | date: 'yyyy-MM-dd'}}
+      td {{data.impressions ? data.impressions : '-'}}
       td &nbsp;
         button.btn.btn-default.btn-xs(ng-click="remove(hash, data)") Usuń
+        button.btn.btn-default.btn-xs(ng-click="prolong(hash, data)") {{(today > data.validTo) ? 'Wznów' : 'Przedłóż'}}
 
 form(name="newToken", ng-submit="add()")
-  table.table
+  table.table.table-striped
     thead
       tr
         th Email klienta

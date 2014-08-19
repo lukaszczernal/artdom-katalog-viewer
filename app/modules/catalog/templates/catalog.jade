@@ -1,13 +1,23 @@
 
-div(ng-show="access == null")
-  p Sprawdzam dostęp do katalogu
+div.catalogCheck.bg-info(ng-show="access == null")
+  h3.center Sprawdzam dostęp do katalogu
 
-div(ng-if="access == false")
-  p Brak dostępu do katalogu. Skontaktuje się z ...
+div.catalogAccessDenied.bg-danger(ng-if="access == false")
+  h3.center Brak dostępu do katalogu
+  p Aby otrzymać dostęp skontaktuje się z przedstawicielem firmy Artdom telefonicznie
+  ul.list-inline
+    li
+      b 602 739 765 - Marek Czernal
+  p lub mailowo
+    ul.list-inline
+      li
+        b
+          a(href="mailto:artdomzam1@wp.pl?Subject=Prośba%20o%20dostęp%20do%20katalogu%20online") artdomzam1@wp.pl
+
 
 div.catalogWrapper(ng-if="access == true")
   a.catalogPage.m-preview(ng-repeat="page in pages", ng-click="showPreview(page)")
     img.catalogPageImage(src="jpg/preview/{{page.svg.file}}.jpg")
-  
+
 div.catalogPreview(ng-click="hidePreview()", ng-show="isPreview")
   img.catalogPreviewImage(src="{{previewImgURL}}")

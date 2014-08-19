@@ -5,20 +5,20 @@ catalogModule.controller 'catalogCtrl', [
   '$filter'
   '$scope'
   '$http'
+  'User'
   '$q'
 
-  ($routeParams, $firebase, $location, $filter, $scope, $http, $q) ->
+  ($routeParams, $firebase, $location, $filter, $scope, $http, User, $q) ->
     $scope.previewImgURL
     $scope.showPreview
     $scope.isPreview
     $scope.access
     $scope.pages
-    
+
     # CHECK HASH IN FIREBASE
-    # ref = new Firebase("https://artdom-katalog.firebaseIO.com/hashes/" + $routeParams.hash)
-    # sync = $firebase(ref)
-    # $scope.hash = sync.$asObject()
-    # hashPromise = $scope.hash.$loaded()
+    ref = new Firebase("https://artdom-katalog.firebaseIO.com/hashes/" + $routeParams.hash)
+    sync = $firebase(ref)
+    hashPromise = sync.$asObject().$loaded()
 
     # # GET LIST OF PAGES
     pagesPromise = $http(
@@ -27,16 +27,20 @@ catalogModule.controller 'catalogCtrl', [
     )
 
 
-    
-    # $q.all([pagesPromise, hashPromise]).then (data) ->
-    $q.all([pagesPromise]).then (data) ->
-      $scope.pages = data[0].data
-      $scope.access = true
 
-      console.log $scope.pages
+    $q.all([pagesPromise, hashPromise]).then (data) ->
+    # $q.all([pagesPromise]).then (data) ->
+      $scope.pages = data[0].data
+      hash = data[1]
+      $scope.access = true
+      addImpression(hash) # if not User.me
     , (err) ->
       $scope.access = false
 
+    addImpression = (hash) ->
+      count = hash.impressions || 0
+      hash.impressions = ++count
+      hash.$save()
 
     $scope.showPreview = (page) ->
       $scope.isPreview = true
@@ -44,6 +48,6 @@ catalogModule.controller 'catalogCtrl', [
 
     $scope.hidePreview = () ->
       $scope.isPreview = false
-      $scope.previewImgURL = ''      
+      $scope.previewImgURL = ''
 
 ]

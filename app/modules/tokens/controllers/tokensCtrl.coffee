@@ -19,7 +19,8 @@ tokensModule.controller 'tokensCtrl', [
 
     # DOM Variables
     $scope.User = User
-    $scope.todayDate = $filter('date')(new Date(), 'yyyy-MM-dd')
+    $scope.today = new Date()
+    $scope.todayDate = $filter('date')($scope.today, 'yyyy-MM-dd')
 
     #TODO temp
     $scope.newTokenEmail = 'john@carmac.com'
@@ -53,5 +54,8 @@ tokensModule.controller 'tokensCtrl', [
 
       modalInstance.result.then () ->
         ref.child(hash).remove()
+
+    $scope.prolong = (hash, data) ->
+      $scope.hashes[hash].validTo = new Date().getTime() + (1000*60*60*24*3)
 
 ]
