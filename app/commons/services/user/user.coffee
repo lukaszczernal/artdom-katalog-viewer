@@ -7,7 +7,7 @@ servicesModule
   ($firebaseSimpleLogin, $location, $firebase) ->
 
     ref = new Firebase("https://artdom-katalog.firebaseIO.com")
-    
+
     User =
       auth: $firebaseSimpleLogin(ref)
 
@@ -31,5 +31,25 @@ servicesModule
         @auth.$logout()
         User.me = null
         $location.path '/login'
-
 ])
+
+#TODO - check tokensModule.coffee for more info
+# .service('ResolveUser', [
+#   '$location'
+#   'User'
+#   '$q'
+
+#   ($location, User, $q) ->
+#     deferred = $q.defer()
+#     User.auth.$getCurrentUser().then (user) ->
+#       User.me = user
+#       if User.me?
+#         console.log 'deferred resolve'
+#         deferred.resolve()
+#       else
+#         console.log 'deferred reject'
+#         deferred.reject()
+
+#     deferred.promise
+
+# ])
