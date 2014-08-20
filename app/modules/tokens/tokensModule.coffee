@@ -14,7 +14,7 @@ tokensModule.config([
       resolve:
         'authentication': ['$location','User','$q', ($location, User, $q) ->
           deferred = $q.defer()
-          User.auth.$getCurrentUser().then (user) ->
+          User.getCurrentUser().then (user) ->
             User.me = user
             if User.me?
               deferred.resolve()

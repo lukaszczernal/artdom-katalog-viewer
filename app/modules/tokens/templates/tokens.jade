@@ -11,7 +11,8 @@ table.table.table-striped
   tbody
     tr(ng-repeat="(hash, data) in hashes")
       td
-        a(ng-href="/katalog/{{hash}}", target="_blank") {{hash}}
+        //- a(ng-href="/katalog/{{hash}}", target="_blank") {{hash}}
+        a(ng-href="/katalog/{{hash}}") {{hash}}
       td {{data.email}}
       td.tokensCell(ng-class="{'m-overdue': today > data.validTo}") {{data.validTo | date: 'yyyy-MM-dd'}}
       td {{data.impressions ? data.impressions : '-'}}

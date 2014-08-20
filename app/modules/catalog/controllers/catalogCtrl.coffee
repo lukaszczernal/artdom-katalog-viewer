@@ -26,14 +26,14 @@ catalogModule.controller 'catalogCtrl', [
       url: '/data/pages-array.json'
     )
 
-
-
     $q.all([pagesPromise, hashPromise]).then (data) ->
-    # $q.all([pagesPromise]).then (data) ->
       $scope.pages = data[0].data
       hash = data[1]
       $scope.access = true
-      addImpression(hash) # if not User.me
+
+      User.getCurrentUser().then () ->
+        addImpression(hash) if not User.me?
+
     , (err) ->
       $scope.access = false
 

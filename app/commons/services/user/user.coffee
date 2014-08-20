@@ -31,6 +31,14 @@ servicesModule
         @auth.$logout()
         User.me = null
         $location.path '/login'
+
+      getCurrentUser: () ->
+        if !User.me
+          @auth.$getCurrentUser().then (user) ->
+            User.me = user
+        else
+          'then': (callback) ->
+            callback(User.me)
 ])
 
 #TODO - check tokensModule.coffee for more info
