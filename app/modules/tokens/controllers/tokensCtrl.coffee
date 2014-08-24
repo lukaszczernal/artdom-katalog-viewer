@@ -19,22 +19,27 @@ tokensModule.controller 'tokensCtrl', [
 
     # DOM Variables
     $scope.User = User
-    $scope.today = new Date()
+    $scope.today = new Date().getTime()
     $scope.todayDate = $filter('date')($scope.today, 'yyyy-MM-dd')
+    $scope.newTokenValidTo = $filter('date')($scope.today + (1000*60*60*24*3), 'yyyy-MM-dd')  # INITIAL VALUE FOR VALID TO FIELD
 
     #TODO temp
-    $scope.newTokenEmail = 'john@carmac.com'
-    $scope.newTokenValidTo = $scope.todayDate
+    # $scope.newTokenEmail = 'john@carmac.com'
+
 
 
     generateHash = () ->
       Math.random().toString(36).substr(2)
 
     $scope.add = () ->
+      date  = $scope.newTokenValidTo # NEED THIS FOR COVNERTION FROM YYYY-MM-DD TO TIMESTAMP
+      year  = date[0..3]
+      month = date[5..6]
+      day   = date[8..9]
 
       objectToSave =
         email: $scope.newTokenEmail
-        validTo: $scope.newTokenValidTo
+        validTo: new Date(year, month, day).getTime()
 
       ref.child(generateHash()).set(objectToSave)
 

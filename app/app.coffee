@@ -2,6 +2,7 @@ artdomApp = angular.module('artdomApp', [
   'firebase'
   'ngRoute'
   'artdomApp.services'
+  'artdomApp.filters'
   'artdomApp.directives'
   'artdomApp.home'
   'artdomApp.shop'

@@ -33,6 +33,12 @@ module.exports = (grunt)->
       all:[
         '.tmp/**/*'
         'public/**/*',
+        '!public/data/',
+        '!public/data/.htaccess',
+        '!public/data/**',
+        '!public/jpg/',
+        '!public/jpg/.htaccess',
+        '!public/jpg/**'
       ]
       stylus: [
         '.tmp/css/index.css'

@@ -44,7 +44,7 @@ catalogModule.controller 'catalogCtrl', [
 
     $scope.showPreview = (page) ->
       $scope.isPreview = true
-      $scope.previewImgURL = "jpg/preview/" +  page.svg.file + ".jpg"
+      $scope.previewImgURL = "jpg/preview/" +  $filter('encodeFilename')(page.svg.file) + ".jpg"
 
     $scope.hidePreview = () ->
       $scope.isPreview = false
