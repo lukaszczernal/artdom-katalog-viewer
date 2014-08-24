@@ -16,12 +16,16 @@ html.no-js
     link(rel='stylesheet', href='css/application.css')
 
   body(ng-app="artdomApp")
-    //- <!--[if lt IE 10]>
-    //- p.browsehappy
-    //-   | You are using an <strong>outdated</strong> browser.
-    //-   | Please <a href="http://browsehappy.com/">upgrade your browser</a>
-    //-   | to improve your experience.
-    //- <![endif]-->
+    <!--[if lt IE 10]>
+    p Przepraszamy, ale Twoja przeglądarka nie jest jeszcze przez nas wspierana.
+    | Prosimy odwiedzić nas ponownie w niedługim czasie lub skorzystać z innej przeglądarki.
+    p Przeglądarki które aktualnie wspieramy to:
+      ul
+        li Chrome
+        li Firefox
+        li Safari
+        li Opera
+    <![endif]-->
 
     //- Add your site or application content here
     div(ng-view="mainView")
