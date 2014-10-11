@@ -6,6 +6,7 @@ artdomApp = angular.module('artdomApp', [
   'artdomApp.directives'
   'artdomApp.home'
   'artdomApp.shop'
+  'artdomApp.wholesale'
   'artdomApp.login'
   'artdomApp.tokens'
   'artdomApp.catalog'
@@ -18,7 +19,7 @@ artdomApp = angular.module('artdomApp', [
     $locationProvider.html5Mode(true)
 
     $routeProvider
-    .when('/', redirectTo: '/wielki-kiermasz-nysa')
+    .when('/', redirectTo: '/hurtownia')
     .otherwise({redirectTo: '/'})
 
 ])
@@ -27,8 +28,18 @@ artdomApp = angular.module('artdomApp', [
   '$rootScope'
   '$location'
   'User'
+  '$route'
 
-  ($rootScope, $location, User) ->
+  ($rootScope, $location, User, $route) ->
+
+    # ROUTING DEPENDS ON DOMAIN
+    domainRoutes = 
+      'localhost': '/sklep-nysa'
+      'artdom.opole.pl': '/hurtownia'
+      'wielkikiermasz.pl': '/sklep-nysa'
+
+    $route.routes['/'].redirectTo = domainRoutes[$location.host()]
+
 
     # $rootScope.$on '$routeChangeStart', (evt, next, current) ->
     #   console.log 'route change start'

@@ -23,10 +23,6 @@ tokensModule.controller 'tokensCtrl', [
     $scope.todayDate = $filter('date')($scope.today, 'yyyy-MM-dd')
     $scope.newTokenValidTo = $filter('date')($scope.today + (1000*60*60*24*3), 'yyyy-MM-dd')  # INITIAL VALUE FOR VALID TO FIELD
 
-    #TODO temp
-    # $scope.newTokenEmail = 'john@carmac.com'
-
-
 
     generateHash = () ->
       Math.random().toString(36).substr(2)
@@ -39,7 +35,7 @@ tokensModule.controller 'tokensCtrl', [
 
       objectToSave =
         email: $scope.newTokenEmail
-        validTo: new Date(year, month, day).getTime()
+        validTo: new Date(year, month-1, day).getTime()
 
       ref.child(generateHash()).set(objectToSave)
 
