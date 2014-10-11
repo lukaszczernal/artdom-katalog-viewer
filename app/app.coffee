@@ -33,10 +33,12 @@ artdomApp = angular.module('artdomApp', [
   ($rootScope, $location, User, $route) ->
 
     # ROUTING DEPENDS ON DOMAIN
-    domainRoutes = 
+    domainRoutes =
       'localhost': '/sklep-nysa'
       'artdom.opole.pl': '/hurtownia'
       'wielkikiermasz.pl': '/sklep-nysa'
+      'www.artdom.opole.pl': '/hurtownia'
+      'www.wielkikiermasz.pl': '/sklep-nysa'
 
     $route.routes['/'].redirectTo = domainRoutes[$location.host()]
 
