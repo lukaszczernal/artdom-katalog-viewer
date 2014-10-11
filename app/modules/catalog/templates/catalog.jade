@@ -17,7 +17,7 @@ div.catalogAccessDenied.bg-danger(ng-if="access == false")
 
 div.catalogWrapper(ng-if="access == true", lazy-load="catalogPageImage")
   a.catalogPage.m-preview(ng-repeat="page in pages track by $index", ng-click="showPreview(page)", ng-if="page.status=='enable'")
-    img.catalogPageImage(data-original="jpg/preview/{{page.svg.file | encodeFilename}}.jpg", width="280", height="394")
+    img.catalogPageImage(data-original="jpg/thumbs/{{page.svg.file | encodeFilename}}.jpg", width="280", height="394")
 
 div.catalogPreview(ng-click="hidePreview()", ng-show="isPreview")
   img.catalogPreviewImage(src="{{previewImgURL}}")

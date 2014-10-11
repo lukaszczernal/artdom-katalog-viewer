@@ -24,6 +24,7 @@ catalogModule.controller 'catalogCtrl', [
     pagesPromise = $http(
       method: "get"
       url: '/data/pages-array.json'
+      cache: false
     )
 
     $q.all([pagesPromise, hashPromise]).then (data) ->

@@ -55,13 +55,15 @@ module.exports = (grunt)->
     uglify:
       build:
         options:
-          mangle: true
+          mangle: false
         files: [
           {
             dest: 'public/js/application.js'
             src: '.tmp/js/application.js'
           },
           {
+            options:
+              mandle: false
             dest: 'public/js/vendor.js'
             src: '.tmp/concat/js/vendor.js'
           }
