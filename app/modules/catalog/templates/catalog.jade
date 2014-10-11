@@ -12,12 +12,12 @@ div.catalogAccessDenied.bg-danger(ng-if="access == false")
     ul.list-inline
       li
         b
-          a(href="mailto:artdomzam@wp.pl?Subject=Prośba%20o%20dostęp%20do%20katalogu%20online") artdomzam1@wp.pl
+          a(href="mailto:m.czernal@wp.pl?Subject=Prośba%20o%20dostęp%20do%20katalogu%20online") m.czernal@wp.pl
 
 
 div.catalogWrapper(ng-if="access == true", lazy-load="catalogPageImage")
   a.catalogPage.m-preview(ng-repeat="page in pages track by $index", ng-click="showPreview(page)", ng-if="page.status=='enable'")
-    img.catalogPageImage(data-original="jpg/thumbs/{{page.svg.file | encodeFilename}}.jpg", width="280", height="394")
+    img.catalogPageImage(data-original="jpg/thumbs/{{page.svg.file | encodeFilename}}.jpg", width="280", height="396")
 
 div.catalogPreview(ng-click="hidePreview()", ng-show="isPreview")
   img.catalogPreviewImage(src="{{previewImgURL}}")
