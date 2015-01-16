@@ -23,7 +23,7 @@ catalogModule.controller 'catalogCtrl', [
     # # GET LIST OF PAGES
     pagesPromise = $http(
       method: "get"
-      url: '/data/pages-array.json'
+      url: '/data/pages-array.json?' + (Math.floor(Math.random()*(99900-100+1)+100))
       cache: false
     )
 
