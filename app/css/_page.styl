@@ -6,11 +6,16 @@
 
 .page-wrapper
   padding-top 70px
-//   margin 0px auto
-//   width 100%
-//   max-width 800px
 
-// .page-image
-//   display block
-//   width 100%
-//   height 1139px
+.page-crop
+  margin 0px auto
+  width 800px
+  height 1142px
+  overflow hidden
+
+.page-image
+  width 1600px
+  height 1142px
+
+  &.m-right
+    margin-left -(@width / 2)px
