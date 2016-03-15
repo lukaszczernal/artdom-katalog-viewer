@@ -10,9 +10,6 @@ tokensModule.controller 'tokensCtrl', [
 
     $scope.customers = Customer.get()
 
-    # $scope.customers.$loaded () ->
-    #   console.log('$scope.customers',$scope.customers)
-
     # DOM Variables
     $scope.User = User
     $scope.today = new Date().getTime()
