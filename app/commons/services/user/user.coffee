@@ -1,63 +1,41 @@
 servicesModule
 .service('User', [
-  '$firebaseSimpleLogin'
   '$location'
-  '$firebase'
+  'DATABASE'
+  '$q'
 
-  ($firebaseSimpleLogin, $location, $firebase) ->
+  ($location, DATABASE, $q) ->
 
-    ref = new Firebase("https://artdom-katalog.firebaseIO.com")
+    ref = new Firebase(DATABASE)
 
     User =
-      auth: $firebaseSimpleLogin(ref)
-
       me: null
 
-      login: (username, password, successLoginCallback) ->
+      login: (username, password) ->
         User.me = null
-        @auth.$login("password",
-          email     : username
-          password  : password
-          rememberMe: true)
-        .then (user) ->
-          User.me = user
-          console.log "logged in as ", user.uid
-        , (error) ->
-          console.error "login failed", error
-        .then (successLoginCallback || angular.noop)
 
+        credentials =
+          email    : username
+          password : password
+
+        callback = (error, authData) ->
+          if (error)
+            console.log("Login Failed!", error)
+          else
+            console.log("Authenticated successfully with payload:", authData)
+            User.me = authData
+
+        ref.authWithPassword(credentials, callback)
 
       logout: () ->
-        @auth.$logout()
+        ref.unauth()
         User.me = null
         $location.path '/login'
 
       getCurrentUser: () ->
-        if !User.me
-          @auth.$getCurrentUser().then (user) ->
-            User.me = user
-        else
-          'then': (callback) ->
-            callback(User.me)
+        def = $q.defer()
+        User.me = ref.getAuth()
+        if User.me? then def.resolve(User.me) else def.reject()
+        def.promise
+
 ])
-
-#TODO - check tokensModule.coffee for more info
-# .service('ResolveUser', [
-#   '$location'
-#   'User'
-#   '$q'
-
-#   ($location, User, $q) ->
-#     deferred = $q.defer()
-#     User.auth.$getCurrentUser().then (user) ->
-#       User.me = user
-#       if User.me?
-#         console.log 'deferred resolve'
-#         deferred.resolve()
-#       else
-#         console.log 'deferred reject'
-#         deferred.reject()
-
-#     deferred.promise
-
-# ])

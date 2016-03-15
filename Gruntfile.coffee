@@ -172,37 +172,25 @@ module.exports = (grunt)->
         files: [
           expand: true
           cwd: 'app/assets'
-          # src: ['**', '!**/*.png', '!**/*.jpg', '!**/*.gif']
           src: ['**']
           dest: 'public/'
         ]
       stylus:
         files: '.tmp/css/application.css': '.tmp/css/index.css'
 
-    # concat:
-    #   build:
-    #     files: [
-    #       # {
-    #       #   dest: '.tmp/concat/js/application.js'
-    #       #   src: ['<%= cfg.coffeeFiles %>']
-    #       # }
-    #       {
-    #         dest: '.tmp/concat/css/application.css'
-    #         src: ['.tmp/stylus/index.css']
-    #       }
-    #     ]
-
-    # concat:
-    #   vendor:
-    #     options:
-    #       separator: ';\n'
-    #     src: ['app/**/*.js', '!app/assets/**/*.js', '!app/assets/test/**']
-    #     dest: '<%= cfg.tmp %>/vendor.js'
-    #   css:
-    #     options:
-    #       separator: '\n\n'
-    #     src: ['app/**/*.css']
-    #     dest: '<%= cfg.tmp %>/vendor.css'
+    ngconstant:
+      options:
+        dest: 'public/js/config.js'
+        name: 'config'
+        wrap: '"use strict";\n\n {%= __ngModule %}'
+      dev:
+        constants:
+          ENV: 'development'
+          DATABASE: 'https://artdom-katalog-dev.firebaseIO.com'
+      prod:
+        constants:
+          ENV: 'production'
+          DATABASE: 'https://artdom-katalog.firebaseIO.com'
 
   ##############################################################
   # Dependencies
@@ -219,6 +207,7 @@ module.exports = (grunt)->
   grunt.loadNpmTasks('grunt-connect-rewrite')
   grunt.loadNpmTasks('grunt-contrib-stylus')
   grunt.loadNpmTasks('grunt-contrib-cssmin')
+  grunt.loadNpmTasks('grunt-ng-constant')
   grunt.loadNpmTasks('grunt-usemin')
 
   ############################################################
@@ -228,6 +217,7 @@ module.exports = (grunt)->
   grunt.registerTask('server', [
     'clean:all' # public and tmp
     'copy:assets' # public
+    'ngconstant:dev'
     'coffee' # tmp
     'jade' # public
     'stylus' # tmp
@@ -244,6 +234,7 @@ module.exports = (grunt)->
   grunt.registerTask('build', [
     'clean:all' # public and tmp
     'copy:assets' # public
+    'ngconstant:prod'
     'coffee' # tmp
     'jade' # public
     'stylus' # tmp

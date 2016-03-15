@@ -3,32 +3,37 @@ h1 tokeny
 table.table.table-striped
   thead
     tr
-      th Token
+      th Nazwa
       th Email klienta
+      th Token
       th Ważne do
       th Ilość wyświetleń
       th &nbsp;
   tbody
-    tr(ng-repeat="(hash, data) in hashes")
+    tr(ng-repeat="customer in customers")
+      td {{customer.name}}
+      td 
+        span(ng-model="customer.email") {{customer.email}}
       td
-        //- a(ng-href="/katalog/{{hash}}", target="_blank") {{hash}}
-        a(ng-href="/katalog/{{hash}}") {{hash}}
-      td {{data.email}}
-      td.tokensCell(ng-class="{'m-overdue': today > data.validTo}") {{data.validTo | date: 'yyyy-MM-dd'}}
-      td {{data.impressions ? data.impressions : '-'}}
+        a(ng-href="/katalog/{{customer.$id}}") {{customer.$id}}
+      td.tokensCell(ng-class="{'m-overdue': today > customer.validTo}") {{customer.validTo | date: 'dd/MM/yyyy'}}
+      td {{customer.impressions ? customer.impressions : '-'}}
       td &nbsp;
-        button.btn.btn-default.btn-xs(ng-click="remove(hash, data)") Usuń
-        button.btn.btn-default.btn-xs(ng-click="prolong(hash, data)") {{(today > data.validTo) ? 'Wznów' : 'Przedłóż'}}
+        button.btn.btn-default.btn-xs(ng-click="remove(customer)") Usuń
+        button.btn.btn-default.btn-xs(ng-click="prolong(customer)") {{(today > customer.validTo) ? 'Wznów' : 'Przedłóż'}}
 
 form(name="newToken", ng-submit="add()")
   table.table.table-striped
     thead
       tr
+        th Nazwa klienta
         th Email klienta
         th Ważne do
         th
     tbody
       tr
+        td
+          input(ng-model="newTokenName", type="text", required, placeholder="nazwa klienta")      
         td
           input(ng-model="newTokenEmail", type="email", required, placeholder="e-mail klienta")
         td

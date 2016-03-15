@@ -1,14 +1,15 @@
 catalogModule.controller 'catalogCtrl', [
+  '$firebaseObject'
   '$routeParams'
-  '$firebase'
   '$location'
+  'DATABASE'
   '$filter'
   '$scope'
   '$http'
   'User'
   '$q'
 
-  ($routeParams, $firebase, $location, $filter, $scope, $http, User, $q) ->
+  ($firebaseObject, $routeParams, $location, DATABASE, $filter, $scope, $http, User, $q) ->
     $scope.previewImgURL
     $scope.showPreview
     $scope.isPreview
@@ -16,9 +17,9 @@ catalogModule.controller 'catalogCtrl', [
     $scope.pages
 
     # CHECK HASH IN FIREBASE
-    ref = new Firebase("https://artdom-katalog.firebaseIO.com/hashes/" + $routeParams.hash)
-    sync = $firebase(ref)
-    hashPromise = sync.$asObject().$loaded()
+    ref = new Firebase(DATABASE + "/hashes/" + $routeParams.hash)
+    cache = $firebaseObject(ref)
+    hashPromise = cache.$loaded()
 
     # # GET LIST OF PAGES
     pagesPromise = $http(
@@ -32,8 +33,9 @@ catalogModule.controller 'catalogCtrl', [
       hash = data[1]
       $scope.access = true
 
-      User.getCurrentUser().then () ->
-        addImpression(hash) if not User.me?
+      User.getCurrentUser()
+      .catch () ->
+        addImpression(hash)
 
     , (err) ->
       $scope.access = false
@@ -45,7 +47,8 @@ catalogModule.controller 'catalogCtrl', [
 
     $scope.showPreview = (page) ->
       $scope.isPreview = true
-      $scope.previewImgURL = "jpg/preview/" +  $filter('encodeFilename')(page.svg.file) + ".jpg"
+      nocache = page.nocache || ''
+      $scope.previewImgURL = "jpg/preview/" +  $filter('encodeFilename')(page.svg.file) + ".jpg" + nocache
 
     $scope.hidePreview = () ->
       $scope.isPreview = false

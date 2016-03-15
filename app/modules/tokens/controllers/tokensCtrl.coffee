@@ -1,50 +1,38 @@
 tokensModule.controller 'tokensCtrl', [
-  '$firebase'
-  '$location'
+  'Customer'
   '$filter'
   '$scope'
   '$modal'
   'User'
 
 
-  ($firebase, $location, $filter, $scope, $modal ,User) ->
+  (Customer, $filter, $scope, $modal, User) ->
 
-    # $scope.baseUrl = "http://" + $location.$$host + ":" + $location.$$port + "/katalog/"
+    $scope.customers = Customer.get()
 
-    ref = new Firebase("https://artdom-katalog.firebaseIO.com/hashes")
-    sync = $firebase(ref)
-
-    syncObject = sync.$asObject()
-    syncObject.$bindTo($scope, 'hashes')
+    # $scope.customers.$loaded () ->
+    #   console.log('$scope.customers',$scope.customers)
 
     # DOM Variables
     $scope.User = User
     $scope.today = new Date().getTime()
     $scope.todayDate = $filter('date')($scope.today, 'yyyy-MM-dd')
-    $scope.newTokenValidTo = $filter('date')($scope.today + (1000*60*60*24*3), 'yyyy-MM-dd')  # INITIAL VALUE FOR VALID TO FIELD
-
-
-    generateHash = () ->
-      Math.random().toString(36).substr(2)
+    $scope.newTokenValidTo = new Date($scope.today + (1000*60*60*24*3))
 
     $scope.add = () ->
-      date  = $scope.newTokenValidTo # NEED THIS FOR COVNERTION FROM YYYY-MM-DD TO TIMESTAMP
-      year  = date[0..3]
-      month = date[5..6]
-      day   = date[8..9]
-
-      objectToSave =
+      data =
+        name: $scope.newTokenName
         email: $scope.newTokenEmail
-        validTo: new Date(year, month-1, day).getTime()
+        validTo: $scope.newTokenValidTo.getTime()
 
-      ref.child(generateHash()).set(objectToSave)
+      Customer.save(data)
 
-    $scope.remove = (hash, data) ->
+    $scope.remove = (customer) ->
 
       modalInstance = $modal.open(
         templateUrl: './commons/templates/modals/confirmation.html'
         controller: ($scope, $modalInstance) ->
-          $scope.title = "Czy usunąć dostęp dla " + data.email + "?"
+          $scope.title = "Czy usunąć dostęp dla " + customer.email + "?"
 
           $scope.ok = () ->
             $modalInstance.close()
@@ -54,9 +42,10 @@ tokensModule.controller 'tokensCtrl', [
       )
 
       modalInstance.result.then () ->
-        ref.child(hash).remove()
+        Customer.remove(customer)
 
-    $scope.prolong = (hash, data) ->
-      $scope.hashes[hash].validTo = new Date().getTime() + (1000*60*60*24*3)
+    $scope.prolong = (customer) ->
+      customer.validTo = new Date().getTime() + (1000*60*60*24*3)
+      Customer.update(customer)
 
 ]

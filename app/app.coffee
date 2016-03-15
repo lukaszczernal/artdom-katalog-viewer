@@ -1,6 +1,7 @@
 artdomApp = angular.module('artdomApp', [
   'firebase'
   'ngRoute'
+  'config'
   'artdomApp.services'
   'artdomApp.filters'
   'artdomApp.directives'
@@ -53,13 +54,11 @@ artdomApp = angular.module('artdomApp', [
 
     # $rootScope.$on '$routeChangeSuccess', (evt, next, current) ->
     #   console.log 'route change success'
-    #   # if next.$$route.requireLogin && !User.me
-    #   #   $location.path('/login')
+    #   if next.$$route.requireLogin && !User.me
+    #     $location.path('/login')
 
     $rootScope.$on '$routeChangeError', (evt, next, current) ->
       if next.$$route.requireLogin && !User.me
         $location.path('/login')
 
 ])
-
-
