@@ -1,49 +1,32 @@
-h1 tokeny
+include ./header
 
-table.table.table-striped
+table.token-table.table.table-hover.table-condensed
   thead
-    tr
-      th Nazwa
-      th Email klienta
-      th Token
-      th Ważne do
-      th Ilość wyświetleń
-      th &nbsp;
+    tr.token-row
+      th.tokens-head.m-20 Nazwa
+      th.tokens-head.m-20 Email klienta
+      th.tokens-head.m-20 Token
+      th.tokens-head.m-20 Ważne do
+      th.tokens-head.m-10 Ilość wyświetleń
+      th.tokens-head.m-10 &nbsp;
   tbody
-    tr(ng-repeat="customer in customers")
-      td {{customer.name}}
-      td 
-        span(ng-model="customer.email") {{customer.email}}
-      td
+    tr.token-row(ng-repeat="customer in customers")
+      td.tokens-cell.m-20 
+        span(editable-text="customer.name" e-name="name" e-form="rowform") {{ customer.name || 'brak' }}
+      td.tokens-cell.m-20
+        span(editable-text="customer.email" e-name="email" e-form="rowform") {{customer.email || 'brak' }}
+      td.tokens-cell.m-20
         a(ng-href="/katalog/{{customer.$id}}") {{customer.$id}}
-      td.tokensCell(ng-class="{'m-overdue': today > customer.validTo}") {{customer.validTo | date: 'dd/MM/yyyy'}}
-      td {{customer.impressions ? customer.impressions : '-'}}
-      td &nbsp;
-        button.btn.btn-default.btn-xs(ng-click="remove(customer)") Usuń
-        button.btn.btn-default.btn-xs(ng-click="prolong(customer)") {{(today > customer.validTo) ? 'Wznów' : 'Przedłóż'}}
-
-form(name="newToken", ng-submit="add()")
-  table.table.table-striped
-    thead
-      tr
-        th Nazwa klienta
-        th Email klienta
-        th Ważne do
-        th
-    tbody
-      tr
-        td
-          input(ng-model="newTokenName", type="text", required, placeholder="nazwa klienta")      
-        td
-          input(ng-model="newTokenEmail", type="email", required, placeholder="e-mail klienta")
-        td
-          label(for="newTokenValidTo")
-          input(ng-model="newTokenValidTo", type="date", required, min="{{todayDate}}" name="newTokenValidTo")
-        td
-          button.btn.btn-default.btn-xs(type="submit") Zapisz nowy
-
-br
-br
-section
-  small Logged in as {{User.me.email}}
-  button.btn.btn-default.btn-xs(ng-click="User.logout()") logout
+      td.tokens-cell.m-20(ng-class="{'m-overdue': today > customer.validTo}")
+        span(editable-date="customer.$validToDate" e-name="validTo" e-form="rowform") {{ customer.validTo | date:"dd/MM/yyyy" }}
+      td.tokens-cell.m-10
+        span {{customer.impressions ? customer.impressions : '-'}}
+      td.tokens-cell.m-10
+        form.form-buttons.form-inline(editable-form="" name="rowform" onbeforesave="customer.$save($data)" ng-show="rowform.$visible" shown="newCustomer.createDate == customer.createDate")
+          button.btn.btn-primary.btn-xs(type="submit" ng-disabled="rowform.$waiting") Zapisz
+          button.btn.btn-default.btn-xs(type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()") Anuluj
+        div(ng-show="!rowform.$visible")
+          button.btn.btn-primary.btn-xs(ng-click="rowform.$show()") Edytuj
+          button.btn.btn-danger.btn-xs(ng-click="remove(customer)") Usuń
+  
+button.center-block.btn.btn-success(ng-click="addCustomer()") Dodaj klienta

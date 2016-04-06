@@ -26,12 +26,13 @@ artdomApp = angular.module('artdomApp', [
 ])
 
 .run([
+  'editableOptions'
   '$rootScope'
   '$location'
   'User'
   '$route'
 
-  ($rootScope, $location, User, $route) ->
+  (editableOptions, $rootScope, $location, User, $route) ->
 
     # ROUTING DEPENDS ON DOMAIN
     domainRoutes =
@@ -43,6 +44,7 @@ artdomApp = angular.module('artdomApp', [
 
     $route.routes['/'].redirectTo = domainRoutes[$location.host()]
 
+    editableOptions.theme = 'bs3'
 
     # $rootScope.$on '$routeChangeStart', (evt, next, current) ->
     #   console.log 'route change start'

@@ -1,4 +1,4 @@
-tokensModule = angular.module('artdomApp.tokens', [])
+tokensModule = angular.module('artdomApp.tokens', ['xeditable'])
 
 
 tokensModule.config([
