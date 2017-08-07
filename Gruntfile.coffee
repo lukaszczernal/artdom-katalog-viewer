@@ -107,6 +107,19 @@ module.exports = (grunt)->
           }
         ]
 
+    imagemin:
+      dynamic:
+        options:
+            optimizationLevel: 7
+        files: [
+            expand: true
+            cwd: 'app/assets'
+            src: [
+              'img/leaflet-*/*.jpg'
+            ]
+            dest: 'public/'
+        ]
+
     watch:
       options:
         spawn: false
@@ -207,6 +220,7 @@ module.exports = (grunt)->
   grunt.loadNpmTasks('grunt-connect-rewrite')
   grunt.loadNpmTasks('grunt-contrib-stylus')
   grunt.loadNpmTasks('grunt-contrib-cssmin')
+  grunt.loadNpmTasks('grunt-contrib-imagemin')
   grunt.loadNpmTasks('grunt-ng-constant')
   grunt.loadNpmTasks('grunt-usemin')
 
@@ -245,4 +259,5 @@ module.exports = (grunt)->
     'concat' # tmp
     'cssmin:build' # public
     'uglify:build' # public
+    'imagemin'
   ])
