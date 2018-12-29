@@ -24,9 +24,9 @@ artdomApp = angular.module('artdomApp', [
     .otherwise({redirectTo: '/'})
 
 ])
-.config(['DATABASE', (DATABASE) ->
+.config(['DATABASE', 'API_KEY', (DATABASE, API_KEY) ->
   config = {
-    apiKey: 'AIzaSyD5xLd0iUDgjj45lNMAq7OCxPq3X2DnaSY',
+    apiKey: API_KEY,
     databaseURL: DATABASE
   };
   firebase.initializeApp(config);

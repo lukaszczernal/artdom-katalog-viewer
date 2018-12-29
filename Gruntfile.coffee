@@ -200,10 +200,12 @@ module.exports = (grunt)->
         constants:
           ENV: 'development'
           DATABASE: 'https://artdom-katalog-dev.firebaseIO.com'
+          API_KEY: 'AIzaSyD5xLd0iUDgjj45lNMAq7OCxPq3X2DnaSY'
       prod:
         constants:
           ENV: 'production'
           DATABASE: 'https://artdom-katalog.firebaseIO.com'
+          API_KEY: 'AIzaSyCr5bpL-2pc9aXEat6CTAyn6enyDYrdjTk'
 
   ##############################################################
   # Dependencies
