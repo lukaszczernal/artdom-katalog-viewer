@@ -1,10 +1,8 @@
 servicesModule
 .factory('DataProvider', [
   '$firebaseArray'
-  '$injector'
-  'DATABASE'
 
-  ($firebaseArray, $injector,DATABASE) ->
+  ($firebaseArray) ->
 
     class DataProvider
 
@@ -13,7 +11,7 @@ servicesModule
         $$added: (snap) ->
           return new _provider(snap)
         $$updated: (snapshot) ->
-          return @$getRecord(snapshot.key()).$refresh(snapshot)
+          return @$getRecord(snapshot.key).$refresh(snapshot)
 
       @get: (ref) ->
         @$list = new $firebaseArray.$extend(@getSyncObject())(ref)
@@ -23,7 +21,7 @@ servicesModule
         data
 
       constructor: (snapshot) ->
-        @$id = snapshot.key()
+        @$id = snapshot.key
         @$refresh(snapshot)
 
       $refresh: (snapshot) ->

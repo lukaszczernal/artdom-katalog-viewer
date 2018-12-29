@@ -17,7 +17,7 @@ catalogModule.controller 'catalogCtrl', [
     $scope.pages
 
     # CHECK HASH IN FIREBASE
-    ref = new Firebase(DATABASE + "/hashes/" + $routeParams.hash)
+    ref = firebase.database().ref().child('hashes/' + $routeParams.hash)
     cache = $firebaseObject(ref)
     hashPromise = cache.$loaded()
 

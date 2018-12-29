@@ -8,7 +8,7 @@ servicesModule
 
     class Customer extends DataProvider
 
-      @ref: new Firebase(DATABASE + '/hashes')
+      @ref: firebase.database().ref().child('hashes')
 
       @get: () ->
         ref = @ref.orderByChild('createDate')

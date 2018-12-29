@@ -24,7 +24,13 @@ artdomApp = angular.module('artdomApp', [
     .otherwise({redirectTo: '/'})
 
 ])
-
+.config(['DATABASE', (DATABASE) ->
+  config = {
+    apiKey: 'AIzaSyD5xLd0iUDgjj45lNMAq7OCxPq3X2DnaSY',
+    databaseURL: DATABASE
+  };
+  firebase.initializeApp(config);
+])
 .run([
   'editableOptions'
   '$rootScope'
