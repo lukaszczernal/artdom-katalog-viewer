@@ -6,7 +6,7 @@
   "scripts": {
     "build": "grunt build",
     "grunt": "grunt",
-    "start": "grunt server",
+    "start": "npm run grunt -- server",
     "bower": "bower"
   },
   "devDependencies": {

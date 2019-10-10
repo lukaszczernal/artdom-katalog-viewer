@@ -14,8 +14,8 @@
   overflow hidden
 
 .page-image
-  width 1600px
-  height 1142px
+  width (2*800)px
+  height 1159px
 
   &.m-right
     margin-left -(@width / 2)px
@@ -24,11 +24,24 @@
     margin-left -(@width / 2)px
 
   &.m-threePages
-    width 2400px
-    height 1142px
+    width (3*800)px
 
     &.m-right
       margin-left -(2*(@width / 3))px
 
     &.m-center
       margin-left -(@width / 3)px
+
+  &.m-fourPages
+    width (4*800)px
+
+    &.m-second
+      margin-left -(@width / 4)px
+
+    &.m-third
+      margin-left -(2*(@width / 4))px
+
+    &.m-last
+      margin-left -(3*(@width / 4))px
+
+
